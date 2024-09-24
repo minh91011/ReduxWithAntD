@@ -1,0 +1,140 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Buy groceries",
+      "description": "Purchase items for the week including milk, eggs, and bread.",
+      "completed": true,
+      "assignee": "Nguyễn Văn An",
+      "createTime": "2024-09-01",
+      "completeTime": "9/24/2024, 9:29:46 AM"
+    },
+    {
+      "id": "2",
+      "title": "Call mom",
+      "description": "Check in with mom and see how she is doing.",
+      "completed": true,
+      "assignee": "Bùi Văn Sơn",
+      "createTime": "2024-09-02",
+      "completeTime": "9/23/2024, 5:38:51 PM"
+    },
+    {
+      "id": "4",
+      "title": "Workout",
+      "description": "Go to the gym and do a full-body workout.",
+      "completed": false,
+      "assignee": "Ngô Thị Hạnh",
+      "createTime": "2024-09-04",
+      "completeTime": null
+    },
+    {
+      "id": "7",
+      "title": "Book flight",
+      "description": "Reserve a flight for the upcoming vacation.",
+      "completed": true,
+      "assignee": "Phan Văn Sơn",
+      "createTime": "2024-09-07",
+      "completeTime": "9/23/2024, 5:40:07 PM"
+    },
+    {
+      "id": "8",
+      "title": "Clean house",
+      "description": "Vacuum, dust, and clean all rooms in the house.",
+      "completed": true,
+      "assignee": "Nguyễn Nhật Minh",
+      "createTime": "2024-09-08",
+      "completeTime": "9/23/2024, 4:21:37 PM"
+    },
+    {
+      "id": "8784",
+      "title": "Start new day",
+      "description": "hello VietED",
+      "assignee": "Nguyễn Nhật Minh",
+      "completed": true,
+      "createTime": "9/24/2024, 9:27:18 AM",
+      "completeTime": "9/24/2024, 9:27:31 AM"
+    },
+    {
+      "id": "1313",
+      "title": "Good day",
+      "description": "Not bad day",
+      "assignee": "Trần Thị Bình",
+      "completed": false,
+      "createTime": "9/24/2024, 3:41:26 PM"
+    },
+    {
+      "id": "27a2",
+      "title": "aa",
+      "description": "a",
+      "assignee": "Trần Thị Bình",
+      "completed": false,
+      "createTime": "9/24/2024, 3:42:07 PM"
+    },
+    {
+      "id": "6ef0",
+      "title": "b",
+      "description": "b",
+      "assignee": "Trần Thị Bình",
+      "completed": false,
+      "createTime": "9/24/2024, 3:43:02 PM"
+    },
+    {
+      "id": "1611",
+      "title": "aaa",
+      "description": "aaaa",
+      "assignee": "Trần Thị Bình",
+      "completed": false,
+      "createTime": "9/24/2024, 3:49:25 PM"
+    }
+  ],
+  "users": [
+    {
+      "id": "2",
+      "name": "Trần Thị Bình",
+      "email": "binhtt@vieted.com",
+      "phone": "0909876543"
+    },
+    {
+      "id": "4",
+      "name": "Phạm Thị Dung",
+      "email": "dungpt@vieted.com",
+      "phone": "0934567890"
+    },
+    {
+      "id": "5",
+      "name": "Hoàng Anh Tuấn",
+      "email": "tuanhat@vieted.com",
+      "phone": "0965432109"
+    },
+    {
+      "id": "9",
+      "name": "Bùi Văn Sơn",
+      "email": "sonbv@vieted.com",
+      "phone": "0981234567"
+    },
+    {
+      "id": "17",
+      "name": "Phan Văn Sơn",
+      "email": "sonpv@vieted.com",
+      "phone": "0978901234"
+    },
+    {
+      "id": "18",
+      "name": "Đinh Thị Thảo",
+      "email": "thaodt@vieted.com",
+      "phone": "0989012345"
+    },
+    {
+      "id": "19",
+      "name": "Nguyễn Nhật Minh",
+      "email": "minhnn@vieted.com",
+      "phone": "0327146217"
+    },
+    {
+      "id": "4ae3",
+      "name": "Sứt ngu nhất quả đất",
+      "email": "minhnnhe161638@fpt.edu.vn",
+      "phone": "2"
+    }
+  ]
+}

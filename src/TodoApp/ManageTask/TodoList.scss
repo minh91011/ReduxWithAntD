@@ -1,0 +1,23 @@
+
+.ant-table-thead > tr > th {
+  border-left: 1px solid black; /* Khung viền in đậm cho các đề mục */
+}
+/* Bo viền xung quanh toàn bộ bảng */
+.ant-table {
+  border: 2px solid black; /* Độ dày 2px và màu đen */
+}
+.ant-table-tbody > tr:first-child > td {
+  border-top: 1px solid black;
+}
+
+
+
+// Style cho nút với hiệu ứng hover chung
+button.btn {
+    transition: background-color 0.3s ease, transform 0.3s ease; // Cập nhật transition để bao gồm transform
+  
+    &:hover {
+      transform: rotateX(50deg); // Xoay 360 độ khi hover
+    }
+  }
+  

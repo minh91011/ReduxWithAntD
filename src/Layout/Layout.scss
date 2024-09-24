@@ -1,0 +1,38 @@
+.link{
+    text-decoration: none;
+    font-weight: bold;
+}
+.layoutParent{
+    .logoHome{
+        padding: 20px;
+        margin: 10px;
+        margin-bottom: 100px;
+        
+        .logoVietED{
+            width: 90%;
+            height: 0%;
+        }
+    }
+    .logoHome:hover{
+        border: solid white 2px;
+        border-radius: 10px;
+    }
+    .breadCrumb{
+        margin: 30px 30px;
+        background-color: rgb(253, 237, 218);
+        border: solid rgb(252, 191, 116) 1px;
+        border-radius: 10px;
+        padding: 20px;
+    }
+}
+
+// Layout.scss
+
+// .fixed-content {
+//     position: fixed; // Cố định vị trí
+//     top: 64px; // Khoảng cách từ đầu trang (64px là chiều cao Header)
+//     bottom: 70px; // Khoảng cách từ dưới cùng (70px là chiều cao Footer)
+//     margin-left: 200px; // Khoảng cách từ bên trái (200px là chiều rộng Sider)
+//     right: 0; // Cố định bên phải
+//     overflow-y: auto; // Cho phép cuộn dọc nếu cần
+// }

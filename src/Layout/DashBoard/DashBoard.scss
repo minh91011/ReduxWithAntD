@@ -1,0 +1,23 @@
+.dashBoard{
+    margin: 50px;
+
+    .headerVietED{
+        text-decoration: none;
+    }
+    .image{
+        // background-color: red;
+    }
+    .dashboard-image{
+        width: 100%;  // Đảm bảo ảnh chiếm toàn bộ chiều rộng của khung
+        height: auto; // Giữ tỷ lệ khung hình
+        border-radius: 8px; // Làm cho các góc của ảnh tròn hơn
+        object-fit: cover; // Đảm bảo ảnh sẽ được cắt đúng cách nếu không vừa khung
+    }
+    .aboutme h3{
+        background-color: rgb(253, 237, 218);
+        border: solid rgb(252, 191, 116) 1px;
+        border-radius: 10px;
+        padding: 20px;
+    }
+}
+

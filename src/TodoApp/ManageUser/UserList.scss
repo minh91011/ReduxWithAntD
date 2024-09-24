@@ -1,0 +1,42 @@
+// src/SCSS/Home.scss
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    th, td {
+      border: 1px solid #000000;
+      padding: 8px;
+      text-align: center;
+    }
+    .complete-text{
+        // background-color: #198754;
+        color: #198754;
+        font-weight: bold;
+    }
+    .task-text{     
+        // background-color: #ffc107;
+        color: #ffc107;
+        font-weight: bold;
+    }
+    select {
+      option[value="Completed"] {
+        color: #198754; // Hoặc áp dụng class bằng cách sử dụng scss này
+        font-weight: bold;
+      }
+      option[value="To Do"] {
+        color: #ffc107;
+        font-weight: bold;
+      }
+    }
+    
+  }
+
+// Style cho nút với hiệu ứng hover chung
+button.btn {
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Cập nhật transition để bao gồm transform */
+  
+    &:hover {
+      transform: scale(0.95); /* Thu nhỏ kích thước xuống 95% khi hover */
+    }
+  }
+  
