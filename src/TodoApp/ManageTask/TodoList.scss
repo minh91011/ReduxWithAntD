@@ -1,13 +1,16 @@
 
 .ant-table-thead > tr > th {
-  border-left: 1px solid black; /* Khung viền in đậm cho các đề mục */
+  border-left: 1px solid rgb(170, 170, 170); /* Khung viền in đậm cho các đề mục */
 }
 /* Bo viền xung quanh toàn bộ bảng */
 .ant-table {
-  border: 2px solid black; /* Độ dày 2px và màu đen */
+  border: 1px solid rgb(170, 170, 170); /* Độ dày 2px và màu đen */
 }
 .ant-table-tbody > tr:first-child > td {
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(170, 170, 170);
+}
+.ant-table-row {
+  background-color: rgb(230, 230, 230);
 }
 
 

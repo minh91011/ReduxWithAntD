@@ -6,9 +6,11 @@ import { DeleteTodo } from "./DeleteTodo";
 import { UpdateTodo } from "./UpdateTodo";
 import { fetchUsers } from "../ManageUser/UserList";
 import { Table, Select, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+
 
 // Hàm fetchTask không thay đổi
-export const fetchTask = async () => {
+export const fetchTask = async () => { 
     try {
         const response = await axios.get('http://localhost:5000/tasks');
         return response.data;
@@ -33,7 +35,7 @@ const TodoList = () => {
             setListTodo(tasks);
         };
         loadData();
-    }, [filter, tasks]); // Chạy lại khi filter hoặc tasks thay đổi
+    }, [filter, tasks]);
 
     const filteredTodo = useSelector((state) => {
         const searchItem = state.searchItem ? state.searchItem.toLowerCase() : "";
@@ -74,6 +76,7 @@ const TodoList = () => {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
+            width: '200px',
         },
         {
             title: 'Create',
@@ -83,22 +86,26 @@ const TodoList = () => {
         {
             title: 'Assignee',
             key: 'assignee',
-            render: (text, task) => (
-                <Select
-                    value={task.assignee ? task.assignee : 'N/A'}
-                    onChange={(value) => handleUpdateTask(task, {
-                        assignee: value,
-                        completed: task.completed
-                    })}
-                >
-                    <Select.Option value='N/A'>N/A</Select.Option>
-                    {listAssignee.map(user => (
-                        <Select.Option key={user.id} value={user.name}>
-                            {user.name}
-                        </Select.Option>
-                    ))}
-                </Select>
-            ),
+            render: (text, task) => {
+                const validAssignee = listAssignee.find(user => user.name === task.assignee);
+                return (
+                    <Select
+                        value={validAssignee ? task.assignee : 'N/A'}   
+                        onChange={(value) => handleUpdateTask(task, {
+                            assignee: value,
+                            completed: task.completed
+                        })}
+                        className="w-100"
+                    >
+                        {/* <Select.Option value='N/A'>N/A</Select.Option> */}
+                        {listAssignee.map(user => (
+                            <Select.Option key={user.id} value={user.name}>
+                                {user.name}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                )
+            },
         },
         {
             title: 'Status',
@@ -110,7 +117,7 @@ const TodoList = () => {
                         assignee: task.assignee,
                         completed: value === 'Completed'
                     })}
-                    style={{ color: task.completed ? 'green' : 'red' }} // Thêm style này
+                    className="w-100"
                 >
                     <Select.Option value="To Do">To Do</Select.Option>
                     <Select.Option value="Completed">Completed</Select.Option>
@@ -127,10 +134,16 @@ const TodoList = () => {
             title: 'Action',
             key: 'action',
             render: (text, task) => (
-                <Button type='primary' danger onClick={() => handleDeleteTask(task.id)}>
-                    Delete
+                <Button 
+                    type='primary' 
+                    danger 
+                    onClick={() => handleDeleteTask(task.id)} 
+                    className="btn btn-danger"
+                    icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
+                >
                 </Button>
             ),
+            
         },
     ];
 

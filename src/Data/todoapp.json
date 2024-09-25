@@ -5,18 +5,27 @@
       "title": "Buy groceries",
       "description": "Purchase items for the week including milk, eggs, and bread.",
       "completed": true,
-      "assignee": "Nguyễn Văn An",
+      "assignee": "Hoàng Anh Tuấn",
       "createTime": "2024-09-01",
-      "completeTime": "9/24/2024, 9:29:46 AM"
+      "completeTime": "9/25/2024, 5:25:04 PM"
     },
     {
       "id": "2",
       "title": "Call mom",
       "description": "Check in with mom and see how she is doing.",
       "completed": true,
-      "assignee": "Bùi Văn Sơn",
+      "assignee": "Đỗ Thị Hoa",
       "createTime": "2024-09-02",
-      "completeTime": "9/23/2024, 5:38:51 PM"
+      "completeTime": "9/25/2024, 5:43:42 PM"
+    },
+    {
+      "id": "3",
+      "title": "Finish report",
+      "description": "Complete the final report for the quarterly review.",
+      "completed": false,
+      "assignee": "Nguyễn Nhật Minh",
+      "createTime": "2024-09-03",
+      "completeTime": null
     },
     {
       "id": "4",
@@ -28,95 +37,120 @@
       "completeTime": null
     },
     {
+      "id": "5",
+      "title": "Read book",
+      "description": "Finish reading the book 'The Great Gatsby'.",
+      "completed": false,
+      "assignee": "Cao Văn Nam",
+      "createTime": "2024-09-05",
+      "completeTime": null
+    },
+    {
+      "id": "6",
+      "title": "Prepare presentation",
+      "description": "Create slides and notes for the upcoming presentation.",
+      "completed": false,
+      "assignee": "Hoàng Anh Tuấn_update",
+      "createTime": "2024-09-06",
+      "completeTime": null
+    },
+    {
       "id": "7",
       "title": "Book flight",
       "description": "Reserve a flight for the upcoming vacation.",
       "completed": true,
-      "assignee": "Phan Văn Sơn",
+      "assignee": "Phạm Thị Dung",
       "createTime": "2024-09-07",
-      "completeTime": "9/23/2024, 5:40:07 PM"
+      "completeTime": "9/25/2024, 10:41:43 AM"
     },
     {
       "id": "8",
       "title": "Clean house",
       "description": "Vacuum, dust, and clean all rooms in the house.",
-      "completed": true,
-      "assignee": "Nguyễn Nhật Minh",
+      "completed": false,
+      "assignee": "Vũ Minh Hải",
       "createTime": "2024-09-08",
-      "completeTime": "9/23/2024, 4:21:37 PM"
+      "completeTime": null
     },
     {
-      "id": "8784",
-      "title": "Start new day",
-      "description": "hello VietED",
-      "assignee": "Nguyễn Nhật Minh",
+      "id": "d9ea",
+      "title": "Check out",
+      "description": "Check out hotel after 1 days",
       "completed": true,
-      "createTime": "9/24/2024, 9:27:18 AM",
-      "completeTime": "9/24/2024, 9:27:31 AM"
+      "createTime": "2024-09-11",
+      "assignee": "Hoàng Anh Tuấn",
+      "completeTime": "9/25/2024, 9:18:57 AM"
     },
     {
-      "id": "1313",
-      "title": "Good day",
-      "description": "Not bad day",
-      "assignee": "Trần Thị Bình",
-      "completed": false,
-      "createTime": "9/24/2024, 3:41:26 PM"
-    },
-    {
-      "id": "27a2",
-      "title": "aa",
-      "description": "a",
-      "assignee": "Trần Thị Bình",
-      "completed": false,
-      "createTime": "9/24/2024, 3:42:07 PM"
-    },
-    {
-      "id": "6ef0",
-      "title": "b",
-      "description": "b",
-      "assignee": "Trần Thị Bình",
-      "completed": false,
-      "createTime": "9/24/2024, 3:43:02 PM"
-    },
-    {
-      "id": "1611",
-      "title": "aaa",
-      "description": "aaaa",
-      "assignee": "Trần Thị Bình",
-      "completed": false,
-      "createTime": "9/24/2024, 3:49:25 PM"
+      "id": "c29f",
+      "title": "Complete a task",
+      "description": "This work is complete a bug of program",
+      "assignee": "Lý Thị Phượng",
+      "completed": true,
+      "createTime": "9/20/2024, 4:48:42 PM",
+      "completeTime": "9/25/2024, 9:18:57 AM"
     }
   ],
   "users": [
     {
-      "id": "2",
-      "name": "Trần Thị Bình",
-      "email": "binhtt@vieted.com",
-      "phone": "0909876543"
-    },
-    {
-      "id": "4",
-      "name": "Phạm Thị Dung",
-      "email": "dungpt@vieted.com",
-      "phone": "0934567890"
-    },
-    {
       "id": "5",
       "name": "Hoàng Anh Tuấn",
-      "email": "tuanhat@vieted.com",
+      "email": "tuanha1@vieted.com",
       "phone": "0965432109"
     },
     {
-      "id": "9",
-      "name": "Bùi Văn Sơn",
-      "email": "sonbv@vieted.com",
-      "phone": "0981234567"
+      "id": "6",
+      "name": "Đỗ Thị Hoa",
+      "email": "hoadt5@vieted.com",
+      "phone": "0976543213"
     },
     {
-      "id": "17",
-      "name": "Phan Văn Sơn",
-      "email": "sonpv@vieted.com",
-      "phone": "0978901234"
+      "id": "7",
+      "name": "Vũ Minh Hải",
+      "email": "haivm5@vieted.com",
+      "phone": "0923456789"
+    },
+    {
+      "id": "10",
+      "name": "Nguyễn Thị Mai",
+      "email": "maint@vieted.com",
+      "phone": "0901234567"
+    },
+    {
+      "id": "11",
+      "name": "Lê Đức Khoa",
+      "email": "khoald@vieted.com",
+      "phone": "0916789012"
+    },
+    {
+      "id": "12",
+      "name": "Trương Thị Lan",
+      "email": "lantt@vieted.com",
+      "phone": "0923456780"
+    },
+    {
+      "id": "13",
+      "name": "Cao Văn Nam",
+      "email": "namcv@vieted.com",
+      "phone": "0934567891"
+    },
+    {
+      "id": "14",
+      "name": "Lý Thị Phượng",
+      "email": "phuonglt@vieted.com",
+      "phone": "0945678901"
+    },
+    {
+      "id": "15",
+      "name": "Nguyễn Minh Quân",
+      "email": "quanng@vieted.com",
+      "phone": "0956789013"
+    },
+    {
+      "id": "16",
+      "name": "Hoàng Thị Quyên",
+      "email": "quyenht@vieted.com",
+      "phone": "0967890123"
     },
     {
       "id": "18",
@@ -127,14 +161,20 @@
     {
       "id": "19",
       "name": "Nguyễn Nhật Minh",
-      "email": "minhnn@vieted.com",
+      "email": "minhnn011002@vieted.com",
       "phone": "0327146217"
     },
     {
-      "id": "4ae3",
-      "name": "Sứt ngu nhất quả đất",
-      "email": "minhnnhe161638@fpt.edu.vn",
-      "phone": "2"
+      "id": "20",
+      "name": "Trịnh Thị Yến",
+      "email": "yentt@vieted.com",
+      "phone": "0334567891"
+    },
+    {
+      "id": "d476",
+      "name": "Trần Văn Hoàng",
+      "email": "hoangtv@vieted.com",
+      "phone": "0986988236"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { ADD_USER, REMOVE_USER, FILTER_USERS, UPDATE_SEARCH_TERM } from "./actionTypes"
+import { ADD_USER, REMOVE_USER, FILTER_USERS, UPDATE_SEARCH_USERS } from "./actionTypes"
 
 
 export const addUser = (user) => ({
@@ -14,6 +14,6 @@ export const filterUsers = (filter) => ({
     payload: {filter}
 });
 export const updateSearchTerm = (searchItem) => ({
-    type: UPDATE_SEARCH_TERM,
+    type: UPDATE_SEARCH_USERS,
     payload: {searchItem}
 });

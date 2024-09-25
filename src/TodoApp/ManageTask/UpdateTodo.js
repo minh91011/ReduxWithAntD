@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { markCompleted, markInCompleted, markAllCompleted } from "../../redux/Task/action";
 import { toast } from 'react-toastify';
-import taskReducer from "../../redux/Task/reducer";
 
 export const UpdateTodo = async (task, updatedData, dispatch) => {
     try {

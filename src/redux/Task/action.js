@@ -1,10 +1,5 @@
-import {SET_TASK, ADD_TASK, REMOVE_TASK, MARK_COMPLETED, MARK_INCOMPLETED, FILTER_TASKS, MARK_ALL_COMPLETED, UPDATE_SEARCH_TERM } from "./actionTypes"
+import {ADD_TASK, REMOVE_TASK, MARK_COMPLETED, MARK_INCOMPLETED, FILTER_TASKS, MARK_ALL_COMPLETED, UPDATE_SEARCH_TERM } from "./actionTypes"
 
-
-export const setTask = (task) => ({
-    type: SET_TASK,
-    payload: task
-});
 export const addTask = (task) => ({
     type: ADD_TASK,
     payload: {task} 

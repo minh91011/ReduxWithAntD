@@ -1,4 +1,4 @@
-import { ADD_USER, REMOVE_USER, UPDATE_SEARCH_TERM } from "./actionTypes"
+import { ADD_USER, REMOVE_USER, UPDATE_SEARCH_USERS } from "./actionTypes"
 
 const initialState = {
     users: [],
@@ -16,7 +16,7 @@ const userReducer = (state = initialState, action) => {
             }
         case REMOVE_USER:
             return { 
-                ...state,
+                ...state, 
                 users: state.users.filter(user => user.id !== action.payload.id)
             };
         case FILTER_USERS:
@@ -25,7 +25,7 @@ const userReducer = (state = initialState, action) => {
                 filter: action.payload.filter,
                 searchItem: state.searchItem
             };
-        case UPDATE_SEARCH_TERM:
+        case UPDATE_SEARCH_USERS:
             return {
                 users: state.users,
                 filter: state.filter,

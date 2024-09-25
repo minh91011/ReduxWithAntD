@@ -1,4 +1,4 @@
 export const ADD_USER = 'ADD_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const FILTER_USERS = 'FILTER_USERS'
-export const UPDATE_SEARCH_TERM = 'UPDATE_SEARCH_TERM'
+export const UPDATE_SEARCH_USERS = 'UPDATE_SEARCH_USERS'

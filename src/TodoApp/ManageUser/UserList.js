@@ -4,7 +4,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteUser } from './DeleteUser';
-import { Table, Button } from 'antd';
+import { Table, Button, Modal, Form, Input } from 'antd';
+import UpdateUser from './UpdateUser';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
 // Hàm fetchUsers để gọi API
@@ -18,13 +20,14 @@ export const fetchUsers = async () => {
         return []; // Trả về mảng rỗng nếu lỗi
     }
 };
-  
+
 const UserList = () => {
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.filter);
-    // const users = useSelector((state) => state.users)
     const [listUsers, setListUsers] = useState([]);
-    
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [isModalShow, setIsModalShow] = useState(false)
+
 
     // Gọi hàm fetchUsers khi component render lần đầu
     useEffect(() => {
@@ -37,12 +40,22 @@ const UserList = () => {
 
     const handleDeleteUser = (id) => {
         DeleteUser(id, dispatch);
-        // setListUsers(prevUsers => prevUsers.filter(user => user.id !== id));
     }
+    const handleUpdateUser = (user) => {
+        setSelectedUser(user); 
+        setIsModalShow(true); 
+    };
+    const handleSave = () => {
+        setIsModalShow(false);
+        setSelectedUser(null);  
+    }
+    const handleCancel = () => {
+        setIsModalShow(false);   
+        setSelectedUser(null);   
+    };
 
     const filteredUser = useSelector((state) => {
         const searchItem = state.searchItem ? state.searchItem.toLowerCase() : "";
-        console.log('Filter is: ',filter)
 
         // Lọc người dùng  
         const filteredUsers = listUsers.filter((user) => {
@@ -60,7 +73,7 @@ const UserList = () => {
         }
     });
 
-    // Cột của bảng
+
     const columns = [
         {
             title: 'ID',
@@ -85,27 +98,47 @@ const UserList = () => {
         {
             title: 'Action',
             key: 'action',
+            width: '200px',
             render: (text, user) => (
-                <Button type="primary" danger onClick={() => handleDeleteUser(user.id)}>
-                    Delete
-                </Button>
+                <>
+                    <div className='btn d-flex justify-content-center'>
+                        <Button type="primary" danger onClick={() => handleDeleteUser(user.id)} className='btn btn-danger'
+                            icon={<DeleteOutlined />}>
+                        </Button>
+                        <Button type="default" danger onClick={() => handleUpdateUser(user)} className='btn btn-warning text-secondary'
+                            icon={<EditOutlined />}>
+                        </Button>
+                    </div>
+                </>
             ),
         },
     ];
 
     return (
-        <div className="todo-app container">
-            <div className="row justify-content-center mt-4">
-                <div className="col-md-12 col-sm-8">
-                    <Table
-                        dataSource={filteredUser}
-                        columns={columns}
-                        rowKey="id"
-                        pagination={{ pageSize: 5 }} // Chỉnh số lượng trang
-                    />
+        <>
+            <div className="todo-app container">
+                <div className="row justify-content-center mt-4">
+                    <div className="col-md-12 col-sm-8">
+                        <Table
+                            dataSource={filteredUser}
+                            columns={columns}
+                            rowKey="id"
+                            pagination={{ pageSize: 5 }} 
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+
+            {/* Modal Update */}
+            <UpdateUser
+                visible={isModalShow}
+                onCancel={handleCancel}
+                onSave={handleSave}
+                selectedUser={selectedUser}
+                dispatch={dispatch}
+            >
+            </UpdateUser>
+        </>
     )
 }
 

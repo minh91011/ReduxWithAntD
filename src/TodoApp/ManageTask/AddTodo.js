@@ -79,7 +79,7 @@ const AddTodo = () => {
                             <option value="">Select Assignee</option>
                             {listAssignee.map(user => (
                                 <option key={user.id} value={user.name}>
-                                    {user.name}
+                                    {user.name} 
                                 </option>
                             ))}
                         </select>
