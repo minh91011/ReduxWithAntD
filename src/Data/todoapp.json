@@ -5,27 +5,27 @@
       "title": "Buy groceries",
       "description": "Purchase items for the week including milk, eggs, and bread.",
       "completed": true,
-      "assignee": "Hoàng Anh Tuấn",
+      "assignee": "Nguyễn Nhật Minh",
       "createTime": "2024-09-01",
-      "completeTime": "9/25/2024, 5:25:04 PM"
+      "completeTime": "9/25/2024, 6:03:36 PM"
     },
     {
       "id": "2",
       "title": "Call mom",
       "description": "Check in with mom and see how she is doing.",
-      "completed": true,
-      "assignee": "Đỗ Thị Hoa",
+      "completed": false,
+      "assignee": "Vũ Minh Hải",
       "createTime": "2024-09-02",
-      "completeTime": "9/25/2024, 5:43:42 PM"
+      "completeTime": null
     },
     {
       "id": "3",
       "title": "Finish report",
       "description": "Complete the final report for the quarterly review.",
-      "completed": false,
+      "completed": true,
       "assignee": "Nguyễn Nhật Minh",
       "createTime": "2024-09-03",
-      "completeTime": null
+      "completeTime": "9/25/2024, 6:03:40 PM"
     },
     {
       "id": "4",
@@ -94,7 +94,7 @@
   "users": [
     {
       "id": "5",
-      "name": "Hoàng Anh Tuấn",
+      "name": "Hoàng Anh Tuấn_update",
       "email": "tuanha1@vieted.com",
       "phone": "0965432109"
     },
@@ -103,12 +103,6 @@
       "name": "Đỗ Thị Hoa",
       "email": "hoadt5@vieted.com",
       "phone": "0976543213"
-    },
-    {
-      "id": "7",
-      "name": "Vũ Minh Hải",
-      "email": "haivm5@vieted.com",
-      "phone": "0923456789"
     },
     {
       "id": "10",
