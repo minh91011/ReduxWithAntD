@@ -23,13 +23,23 @@ const items = [
 
     getItem('Todo App', 'sub1', <AppstoreOutlined />, [
         getItem(
-            <Link to="/Tasks" className='text-decoration-none'>Manage Task</Link>, '3'
+            <Link to="/TodoApp/Tasks" className='text-decoration-none'>Manage Task</Link>, '1'
         ),
         getItem(
-            <Link to="/Users" className='text-decoration-none'>Manage User</Link>, '4'
+            <Link to="/TodoApp/Users" className='text-decoration-none'>Manage User</Link>, '2'
         )
     ]),
-    getItem('Exam System', '5', <AppstoreOutlined />),
+    getItem('Exam System', '5', <AppstoreOutlined />, [
+        getItem(
+            <Link to="/Exam/Exams" className='text-decoration-none'>Manage Exam</Link>, '3'
+        ),
+        getItem(
+            <Link to="/Exam/Questions" className='text-decoration-none'>Manage Question</Link>, '4'
+        ),
+        getItem(
+            <Link to="/Exam/Answers" className='text-decoration-none'>Manage Answer</Link>, '5'
+        )
+    ]),
 ];
 const WebLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -73,25 +83,7 @@ const WebLayout = () => {
                         transition={Bounce}
                     />
             <Layout className='layoutChild'>
-                {/* <Header className='header'>
-                    <ToastContainer
-                        position="top-center"
-                        autoClose={2000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                        transition={Bounce}
-                    />
-                    <h3 className='headerText'>XIN CHÀO!, MÌNH LÀ NHẬT MINH, INTERN REACTJS TẠI
-                        <a href="https://vieted.com/" class="headerVietED"> VIETED</a>
-                    </h3>
-                </Header> */}
-                <Content>
+                <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <Breadcrumb className='breadCrumb'>
                         {breadcrumbItems}
                     </Breadcrumb>

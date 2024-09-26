@@ -8,7 +8,7 @@ import TodoView from './TodoApp/ManageTask/TodoView'
 import UserView from './TodoApp/ManageUser/UserView'
 import { Provider } from 'react-redux';
 import store from './redux/Task/store';
-import { ToastContainer, Bounce } from 'react-toastify';
+import ExamList from './Exam/ManageExam/Exams';
 
 function App() {
   return (
@@ -17,8 +17,9 @@ function App() {
         <Routes>
           <Route path="/" element={<WebLayout />}>
             <Route index element={<DashBoard />} />
-            <Route path="tasks" element={<TodoView />} />
-            <Route path="users" element={<UserView />} />
+            <Route path="/TodoApp/tasks" element={<TodoView />} />
+            <Route path="/TodoApp/users" element={<UserView />} />
+            <Route path="/Exam/exams" element={<ExamList />} />
           </Route>
         </Routes>
       </BrowserRouter>

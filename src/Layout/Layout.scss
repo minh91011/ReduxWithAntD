@@ -3,6 +3,8 @@
     font-weight: bold;
 }
 .layoutParent{
+    height: 100vh;  // Chiều cao bằng chiều cao màn hình  
+    
     .logoHome{
         padding: 20px;
         margin: 10px;
@@ -17,6 +19,11 @@
         border: solid white 2px;
         border-radius: 10px;
     }
+    // .layoutChild{  
+    //     display: flex;  
+    //     flex-direction: column;  // Sắp xếp theo chiều dọc  
+    //     overflow: hidden; // Ngăn ngừa cuộn trang
+    // }
     .breadCrumb{
         margin: 30px 30px;
         background-color: rgb(253, 237, 218);
@@ -27,12 +34,8 @@
 }
 
 // Layout.scss
-
-// .fixed-content {
-//     position: fixed; // Cố định vị trí
-//     top: 64px; // Khoảng cách từ đầu trang (64px là chiều cao Header)
-//     bottom: 70px; // Khoảng cách từ dưới cùng (70px là chiều cao Footer)
-//     margin-left: 200px; // Khoảng cách từ bên trái (200px là chiều rộng Sider)
-//     right: 0; // Cố định bên phải
-//     overflow-y: auto; // Cho phép cuộn dọc nếu cần
-// }
+.fixed-content {
+    overflow: auto; /* Cho phép cuộn dọc */  
+    height: calc(100vh - 64px - 70px); 
+    padding: 20px; // Khoảng cách bên trong 
+}
