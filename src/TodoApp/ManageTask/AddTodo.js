@@ -38,7 +38,7 @@ const AddTodo = () => {
                 createTime: new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
             };
 
-            try {
+            try { 
                 const response = await axios.post('http://localhost:5000/tasks', newTask);
                 dispatch(addTask(response.data));
                 console.log("Task vừa thêm:", newTask);

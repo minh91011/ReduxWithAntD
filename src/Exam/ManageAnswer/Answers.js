@@ -1,49 +1,59 @@
 import React, { useEffect, useState } from "react";
-import AddExam from "./AddExam";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Select, Button } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
-export const fetchExam = async () => {
+export const fetchAnswer = async () => {
     try {
-        const response = await axios.get(`https://localhost:8080/api/Exam`);
+        const response = await axios.get(`https://localhost:8080/api/Answer`);
         return response.data
     }
     catch (error) {
         console.log('error', error)
     }
 }
-const ExamList = () => {
+const AnswerList = () => {
     const dispatch = useDispatch();
-    const [listExam, setListExam] = useState([])
+    const [listAnswer, setListAnswer] = useState([])
 
     useEffect(() => {
         const loadData = async () => {
-            const exams = await fetchExam();
-            setListExam(exams)
+            const answers = await fetchAnswer();
+            setListAnswer(answers)
+            console.log('Answer: ', answers)
         }
-        loadData(); 
-    },[listExam])
+        loadData();
+    }, [])
 
     //
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'examId',
+            dataIndex: 'answerId',
             key: 'id',
         },
         {
-            title: 'Name',
-            dataIndex: 'examName',
-            key: 'title',
+            title: 'QuestionId',
+            dataIndex: 'questionId',
+            key: 'questionId',
         },
         {
-            title: 'Duration',
-            dataIndex: 'duration',
-            key: 'duration',
-            width: '200px',
+            title: 'Title',
+            dataIndex: 'value',
+            key: 'value',
+        },
+        {
+            title: 'Correct',
+            dataIndex: 'isCorrect',
+            key: 'isCorrect',
+            render: (isCorrect) => (
+                <Select defaultValue={isCorrect ? 'Correct' : 'InCorrect'}>
+                    <Select.Option value="Correct">Correct</Select.Option>
+                    <Select.Option value="Incorrect">Incorrect</Select.Option>
+                </Select>
+            ),
         },
         {
             title: 'Action',
@@ -70,9 +80,8 @@ const ExamList = () => {
 
     return (
         <div>
-            <AddExam/>
             <Table
-                dataSource={listExam}
+                dataSource={listAnswer}
                 columns={columns}
                 rowKey="id"
                 pagination={{ pageSize: 5 }}
@@ -81,4 +90,4 @@ const ExamList = () => {
     )
 }
 
-export default ExamList;
+export default AnswerList;

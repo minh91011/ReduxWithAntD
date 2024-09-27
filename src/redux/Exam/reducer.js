@@ -1,54 +1,54 @@
-import {ADD_TASK, REMOVE_TASK, MARK_COMPLETED, MARK_INCOMPLETED, FILTER_TASKS, MARK_ALL_COMPLETED, UPDATE_SEARCH_TERM } from "./actionTypes"
+import {ADD_EXAM, REMOVE_EXAM, MARK_COMPLETED, MARK_INCOMPLETED, FILTER_EXAMS, MARK_ALL_COMPLETED, UPDATE_SEARCH_TERM } from "./actionTypes"
 
 const initialState = {
-    tasks: [],
+    exams: [],
     filter: "ALL",
     searchItem: ""
 }
-const taskReducer = (state = initialState, action) => {
+const examReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_TASK:
+        case ADD_EXAM:
             return {
-                tasks: [...state.tasks, action.payload],
+                exams: [...state.exams, action.payload],
                 filter: state.filter,
                 searchItem: state.searchItem
             }
-        case REMOVE_TASK:
+        case REMOVE_EXAM:
             return {
                 ...state,
-                tasks: state.tasks.filter(task => task.id !== action.payload.id)
+                exams: state.exams.filter(exam => exam.id !== action.payload.id)
             };
         case MARK_COMPLETED:
             return {
-                tasks: state.tasks.map((task) =>
-                    task.id === action.payload.id ? { ...task, completed: true, completeTime: action.payload.completeTime } : task),
+                exams: state.exams.map((exam) =>
+                    exam.id === action.payload.id ? { ...exam, completed: true, completeTime: action.payload.completeTime } : exam),
                 filter: state.filter,
                 searchItem: state.searchItem
             }
         case MARK_INCOMPLETED:
             return {
-                tasks: state.tasks.map((task) =>
-                    task.id === action.payload.id ? { ...task, completed: false, completeTime: action.payload.completeTime } : task),
+                exams: state.exams.map((exam) =>
+                    exam.id === action.payload.id ? { ...exam, completed: false, completeTime: action.payload.completeTime } : exam),
                 filter: state.filter,
                 searchItem: state.searchItem
             }
-        case FILTER_TASKS:
+        case FILTER_EXAMS:
             return {
-                tasks: state.tasks,
+                exams: state.exams,
                 filter: action.payload.filter,
                 searchItem: state.searchItem
             }
         case UPDATE_SEARCH_TERM:
             return {
-                tasks: state.tasks,
+                exams: state.exams,
                 filter: state.filter,
                 searchItem: action.payload.searchItem
             }
         case MARK_ALL_COMPLETED:
             return {
                 ...state,
-                tasks: state.tasks.map(task => ({
-                    ...task,
+                exams: state.exams.map(exam => ({
+                    ...exam,
                     completed: true
                 }))
             };
@@ -57,4 +57,4 @@ const taskReducer = (state = initialState, action) => {
     }
 }
 
-export default taskReducer;
+export default examReducer;

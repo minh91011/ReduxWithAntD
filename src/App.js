@@ -9,6 +9,8 @@ import UserView from './TodoApp/ManageUser/UserView'
 import { Provider } from 'react-redux';
 import store from './redux/Task/store';
 import ExamList from './Exam/ManageExam/Exams';
+import AnswerList from './Exam/ManageAnswer/Answers';
+import QuestionList from './Exam/ManageQuestion/Questions';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="/TodoApp/tasks" element={<TodoView />} />
             <Route path="/TodoApp/users" element={<UserView />} />
             <Route path="/Exam/exams" element={<ExamList />} />
+            <Route path="/Exam/answers" element={<AnswerList/>} />
+            <Route path="/Exam/questions" element={<QuestionList/>} />
           </Route>
         </Routes>
       </BrowserRouter>

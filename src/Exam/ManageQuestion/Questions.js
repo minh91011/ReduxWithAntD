@@ -1,49 +1,43 @@
 import React, { useEffect, useState } from "react";
-import AddExam from "./AddExam";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Select, Button } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
-export const fetchExam = async () => {
+export const fetchQuestion = async () => {
     try {
-        const response = await axios.get(`https://localhost:8080/api/Exam`);
+        const response = await axios.get(`https://localhost:8080/api/Question`);
         return response.data
     }
     catch (error) {
         console.log('error', error)
     }
 }
-const ExamList = () => {
+const QuestionList = () => {
     const dispatch = useDispatch();
-    const [listExam, setListExam] = useState([])
+    const [listQuestion, setListQuestion] = useState([])
 
     useEffect(() => {
         const loadData = async () => {
-            const exams = await fetchExam();
-            setListExam(exams)
+            const questions = await fetchQuestion();
+            setListQuestion(questions)
+            console.log('Question: ', questions)
         }
-        loadData(); 
-    },[listExam])
+        loadData();
+    }, [])
 
     //
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'examId',
+            dataIndex: 'questionId',
             key: 'id',
         },
         {
-            title: 'Name',
-            dataIndex: 'examName',
-            key: 'title',
-        },
-        {
-            title: 'Duration',
-            dataIndex: 'duration',
-            key: 'duration',
-            width: '200px',
+            title: 'Title',
+            dataIndex: 'questionText',
+            key: 'questionText',
         },
         {
             title: 'Action',
@@ -70,9 +64,8 @@ const ExamList = () => {
 
     return (
         <div>
-            <AddExam/>
             <Table
-                dataSource={listExam}
+                dataSource={listQuestion}
                 columns={columns}
                 rowKey="id"
                 pagination={{ pageSize: 5 }}
@@ -81,4 +74,4 @@ const ExamList = () => {
     )
 }
 
-export default ExamList;
+export default QuestionList;
