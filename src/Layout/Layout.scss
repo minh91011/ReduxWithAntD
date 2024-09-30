@@ -1,6 +1,14 @@
 .link{
-    text-decoration: none;
+    text-decoration: none;  
     font-weight: bold;
+}
+.link-hover{
+    text-decoration: none;
+    text-align: center; 
+}
+.link-hover:hover{
+    background-color: #5a7086;
+    border-radius: 10px;
 }
 .layoutParent{
     height: 100vh;  // Chiều cao bằng chiều cao màn hình  
@@ -19,11 +27,6 @@
         border: solid white 2px;
         border-radius: 10px;
     }
-    // .layoutChild{  
-    //     display: flex;  
-    //     flex-direction: column;  // Sắp xếp theo chiều dọc  
-    //     overflow: hidden; // Ngăn ngừa cuộn trang
-    // }
     .breadCrumb{
         margin: 30px 30px;
         background-color: rgb(253, 237, 218);

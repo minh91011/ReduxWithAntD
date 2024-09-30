@@ -8,7 +8,6 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logoVietED from '../Assets/Image/logoVietED.png'
 import './Layout.scss'
-import BreadcrumbItem from 'antd/es/breadcrumb/BreadcrumbItem';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -21,24 +20,24 @@ function getItem(label, key, icon, children) {
 }
 const items = [
 
-    getItem('Todo App', 'sub1', <AppstoreOutlined />, [
-        getItem(
-            <Link to="/TodoApp/Tasks" className='text-decoration-none'>Manage Task</Link>, '1'
-        ),
-        getItem(
-            <Link to="/TodoApp/Users" className='text-decoration-none'>Manage User</Link>, '2'
-        )
-    ]),
-    getItem('Exam System', '5', <AppstoreOutlined />, [
-        getItem(
-            <Link to="/Exam/Exams" className='text-decoration-none'>Manage Exam</Link>, '3'
-        ),
-        getItem(
-            <Link to="/Exam/Questions" className='text-decoration-none'>Manage Question</Link>, '4'
-        ),
-        getItem(
-            <Link to="/Exam/Answers" className='text-decoration-none'>Manage Answer</Link>, '5'
-        )
+    getItem('Todo App', 'sub1', <AppstoreOutlined />, [  
+        getItem(  
+            <Link to="/TodoApp/Tasks" className='link-hover'>Manage Task</Link>, '1'  
+        ),  
+        getItem(  
+            <Link to="/TodoApp/Users" className='link-hover'>Manage User</Link>, '2'  
+        )  
+    ]),  
+    getItem('Exam System', '5', <AppstoreOutlined />, [  
+        getItem(  
+            <Link to="/Exam/Exams" className='link-hover'>Manage Exam</Link>, '3'  
+        ),  
+        getItem(  
+            <Link to="/Exam/Questions" className='link-hover'>Manage Question</Link>, '4'  
+        ),  
+        getItem(  
+            <Link to="/Exam/Answers" className='link-hover'>Manage Answer</Link>, '5'  
+        )  
     ]),
 ];
 const WebLayout = () => {

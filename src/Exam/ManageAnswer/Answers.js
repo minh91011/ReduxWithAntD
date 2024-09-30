@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Select, Button } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import AddAnswer from "./AddAnswer";
 
 
 export const fetchAnswer = async () => {
@@ -22,10 +23,9 @@ const AnswerList = () => {
         const loadData = async () => {
             const answers = await fetchAnswer();
             setListAnswer(answers)
-            console.log('Answer: ', answers)
         }
         loadData();
-    }, [])
+    }, [listAnswer])
 
     //
     const columns = [
@@ -40,7 +40,7 @@ const AnswerList = () => {
             key: 'questionId',
         },
         {
-            title: 'Title',
+            title: 'Answer',
             dataIndex: 'value',
             key: 'value',
         },
@@ -78,14 +78,17 @@ const AnswerList = () => {
         },
     ];
 
-    return (
+    return ( 
         <div>
-            <Table
-                dataSource={listAnswer}
-                columns={columns}
-                rowKey="id"
-                pagination={{ pageSize: 5 }}
-            />
+            <>
+                <AddAnswer />
+                <Table
+                    dataSource={listAnswer}
+                    columns={columns}
+                    rowKey="id"
+                    pagination={{ pageSize: 5 }}
+                />
+            </>
         </div>
     )
 }

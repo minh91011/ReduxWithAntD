@@ -43,7 +43,7 @@ const UpdateUser = ({ visible, onCancel, onSave, selectedUser, dispatch }) => {
     };
 
     return (
-        <Modal
+        <Modal 
             visible={visible}
             title="Update User"
             onCancel={onCancel}
