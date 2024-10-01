@@ -14,4 +14,3 @@ export const DeleteUser = async (id, dispatch) => {
     }
 };
 
-// other action creators...

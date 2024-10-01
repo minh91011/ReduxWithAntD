@@ -3,12 +3,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Select, Button, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import AddQuestion from "./AddQuestion";
+import AddQuestion from "./AddQuestion"; 
+import { BASE_URL } from "../ManageExam/Exams";
 
 
 export const fetchQuestion = async () => {
     try {
-        const response = await axios.get(`https://localhost:8080/api/Question`);
+        const response = await axios.get(`${BASE_URL}/Question`);
         return response.data
     }
     catch (error) {
@@ -17,7 +18,7 @@ export const fetchQuestion = async () => {
 }
 export const fetchAnswer = async (id) => {  
     try {  
-        const response = await axios.get(`https://localhost:8080/api/Answer/GetByQuestionId/id?id=${id}`);  
+        const response = await axios.get(`${BASE_URL}/Answer/GetByQuestionId/id?id=${id}`);  
         return response.data;  
     } catch (error) {  
         console.log('Error fetching answers:', error);  

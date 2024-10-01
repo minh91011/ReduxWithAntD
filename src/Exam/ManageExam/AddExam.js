@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { BASE_URL } from "./Exams";
 
 const AddExam = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const AddExam = () => {
                 duration: examInfo.duration
             };
             try{
-                const response = await axios.post(`https://localhost:8080/api/Exam/Add/`, newExam);
+                await axios.post(`${BASE_URL}/Exam/Add/`, newExam);
                 toast.success('Add success!')
                 setExamInfo({examName: '', duration: ''})
             }
@@ -26,7 +27,7 @@ const AddExam = () => {
                 console.log(error)
                 toast.error('Add fail!')
             }
-        }
+        } 
     }
 
     return (

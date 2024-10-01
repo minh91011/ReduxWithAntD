@@ -6,19 +6,22 @@ import { Table, Button, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
 import UpdateExam from "./UpdateExam";
-
-export const fetchExam = async () => {
-    try {
-        const response = await axios.get(`https://localhost:8080/api/Exam`);
-        return response.data;
-    } catch (error) {
-        console.log('Error:', error);
-    }
+import { DeleteExam } from "./DeleteExam";
+ 
+export const BASE_URL = 'https://examonline.azurewebsites.net/api';  
+ 
+export const fetchExam = async () => {  
+    try {  
+        const response = await axios.get(`${BASE_URL}/Exam`);  
+        return response.data;  
+    } catch (error) {  
+        console.log('Error:', error);  
+    }  
 };
 
 export const fetchQuestionByExam = async (id) => {
     try {
-        const response = await axios.get(`https://localhost:8080/api/ExamQuestion/examId/${id}`);
+        const response = await axios.get(`${BASE_URL}/ExamQuestion/examId/${id}`);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
@@ -89,11 +92,14 @@ const ExamList = () => {
         setIsModalExam(false);   
         setSelectedExam(null);   
     };
-
     const handleSaveUpdateExam = () => {
         setIsModalExam(false);   
         setSelectedExam(null);   
     };
+    const handleDeleteExam = (id) => {
+        console.log('id: ',id)
+        DeleteExam(id);
+    }
 
     const columns = [
         {
@@ -119,7 +125,7 @@ const ExamList = () => {
             width: '250px',
             render: (text, exam) => (
                 <>
-                    <Button type='primary' danger className="btn btn-danger" icon={<DeleteOutlined />} />
+                    <Button type='primary' danger onClick={() => handleDeleteExam(exam.examId)} className="btn btn-danger" icon={<DeleteOutlined />} />
                     <Button type="default" danger onClick={() => handleUpdateExam(exam)} className='btn text-secondary'
                         icon={<EditOutlined />}>
                     </Button>
