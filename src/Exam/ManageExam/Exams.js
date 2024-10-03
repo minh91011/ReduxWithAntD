@@ -10,6 +10,7 @@ import { DeleteExam } from "./DeleteExam";
 import { fetchAnswer } from "../ManageQuestion/Questions";
 import { DeleteExamQuestion, DeleteQuestion } from "../ManageQuestion/DeleteQuestion";
 import { DeleteAnswer } from "../ManageAnswer/DeleteAnswer";
+import ModalShowAnswer from "../ManageAnswer/ModalShowAnswer";
 
 export const BASE_URL = 'https://examonline.azurewebsites.net/api';
 
@@ -42,8 +43,8 @@ const ExamList = () => {
     const [isModalShow, setIsModalShow] = useState(false);
     const [currentExamId, setCurrentExamId] = useState(null);
     //Modal cho ViewAnswer
-    const [listAnswers, setListAnswers] = useState([]); 
-    const [isModalAnswer, setIsModalAnswer] = useState(false);  
+    const [listAnswers, setListAnswers] = useState([]);
+    const [isModalAnswer, setIsModalAnswer] = useState(false);
     const [currentQuestionId, setCurrentQuestionId] = useState(null);
 
     //Modal cho UpdateExam
@@ -114,24 +115,24 @@ const ExamList = () => {
     }
 
     //answer
-    const handleShowAnswers = async (questionId) => {  
-        setCurrentQuestionId(questionId);  
+    const handleShowAnswers = async (questionId) => {
+        setCurrentQuestionId(questionId);
         // console.log('Qid: ',questionId)
-        const fetchedAnswers = await fetchAnswer(questionId);  
-        if (fetchedAnswers) {  
-            setListAnswers(fetchedAnswers);  
-        } else {  
-            setListAnswers([]);  
-            toast.error('No answers found for this question!');  
-        }  
-        setIsModalAnswer(true);  
+        const fetchedAnswers = await fetchAnswer(questionId);
+        if (fetchedAnswers) {
+            setListAnswers(fetchedAnswers);
+        } else {
+            setListAnswers([]);
+            toast.error('No answers found for this question!');
+        }
+        setIsModalAnswer(true);
         setIsModalShow(false);
-    };   
-    const handleCloseAnswersModal = () => {  
+    };
+    const handleCloseAnswersModal = () => {
         setIsModalAnswer(false);
-        setIsModalShow(true);  
-        setListAnswers([]);  
-        setCurrentQuestionId(null);  
+        setIsModalShow(true);
+        setListAnswers([]);
+        setCurrentQuestionId(null);
     };
     const handleDeleteAnswer = (id) => {
         DeleteAnswer(id);
@@ -210,48 +211,6 @@ const ExamList = () => {
         },
     ];
 
-    const columnAnswers = [
-        {
-            title: 'Answer ID',
-            dataIndex: 'answerId',
-            key: 'answerId',
-        },
-        {
-            title: 'Answer',
-            dataIndex: 'value',
-            key: 'value',
-        },
-        {
-            title: 'Correct',
-            dataIndex: 'isCorrect',
-            key: 'isCorrect',
-            render: (isCorrect) => (
-                <Select defaultValue={isCorrect ? 'Correct' : 'InCorrect'}>
-                    <Select.Option value="Correct">Correct</Select.Option>
-                    <Select.Option value="Incorrect">Incorrect</Select.Option>
-                </Select>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            width: '100px',
-            render: (text, answer) => (
-                <>
-                    <Button
-                        type='primary'
-                        danger
-                        onClick={() => handleDeleteAnswer(answer.answerId)}
-                        className="btn btn-danger"
-                        icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
-                    >
-                    </Button>
-                    <Button type="default" danger className='btn text-secondary' icon={<EditOutlined />} />
-                </>
-            ),
-        },
-    ];
-
     return (
         <div>
             <AddExam />
@@ -286,24 +245,14 @@ const ExamList = () => {
                 selectedExam={selectedExam}
                 dispatch={dispatch}>
             </UpdateExam>
- 
-            <Modal title={`Answers for Question ID: ${currentQuestionId}`} visible={isModalAnswer}  
-                onCancel={handleCloseAnswersModal}  
-                onOk={handleCloseAnswersModal}  
-                width={1000}>  
-                <div>  
-                    {listAnswers.length > 0 ? (  
-                        <Table
-                        dataSource={listAnswers}
-                        columns={columnAnswers}
-                        rowKey="answerId"
-                        pagination={false}
-                    /> 
-                    ) : (  
-                        <p>No answers available.</p>  
-                    )}  
-                </div>  
-            </Modal>
+
+            <ModalShowAnswer
+                title={`Question: ${currentQuestionId}`}
+                visible={isModalAnswer}
+                onCancel={handleCloseAnswersModal}
+                onSave={handleCloseAnswersModal}
+                listAnswerEachQuestion={listAnswers}>
+            </ModalShowAnswer>
         </div>
     );
 };

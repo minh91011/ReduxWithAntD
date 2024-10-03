@@ -7,6 +7,7 @@ import AddQuestion from "./AddQuestion";
 import { BASE_URL } from "../ManageExam/Exams";
 import { DeleteQuestion } from "./DeleteQuestion";
 import UpdateQuestion from "./UpdateQuestion";
+import ModalShowAnswer from "../ManageAnswer/ModalShowAnswer";
 
 
 export const fetchQuestion = async () => {
@@ -32,21 +33,21 @@ const QuestionList = () => {
     const [listAnswerQuestion, setListAnswerQuestion] = useState([]);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
 
-    const [isModalShow, setIsModalShow] = useState(false);
+    const [isModalShowAnswer, setisModalShowAnswer] = useState(false);
     const [currentQuestionId, setCurrentQuestionId] = useState(null);
 
-    const [isModalQuestion, setIsModalQuestion] = useState(false);
+    const [isModalUpdateQuestion, setisModalUpdateQuestion] = useState(false);
 
 
 
     useEffect(() => {
         const loadData = async () => {
             const questions = await fetchQuestion();
-            console.log('question: ',questions)
+            console.log('question: ', questions)
             setListQuestion(questions)
         }
         loadData();
-    }, [listQuestion])
+    }, [])
 
     useEffect(() => {
         const loadAnswer = async () => {
@@ -56,14 +57,14 @@ const QuestionList = () => {
             }
         }
         loadAnswer();
-    }, [isModalShow])
+    }, [isModalShowAnswer])
 
     const handleShowAnswer = (id) => {
         setCurrentQuestionId(id);
-        setIsModalShow(true);
+        setisModalShowAnswer(true);
     };
     const handleCloseModal = () => {
-        setIsModalShow(false);
+        setisModalShowAnswer(false);
         setListAnswerQuestion([]);
         setCurrentQuestionId(null);
     };
@@ -72,16 +73,16 @@ const QuestionList = () => {
         DeleteQuestion(id);
     }
     const handleUpdateQuestion = (question) => {
-        setIsModalQuestion(true);
+        setisModalUpdateQuestion(true);
         setSelectedQuestion(question)
     }
     const handleCancelUpdateQuestion = () => {
-        setIsModalQuestion(false);   
-        setSelectedQuestion(null);   
+        setisModalUpdateQuestion(false);
+        setSelectedQuestion(null);
     };
     const handleSaveUpdateQuestion = () => {
-        setIsModalQuestion(false);   
-        setSelectedQuestion(null);   
+        setisModalUpdateQuestion(false);
+        setSelectedQuestion(null);
     };
     //
     const columns = [
@@ -122,41 +123,6 @@ const QuestionList = () => {
         },
     ];
 
-    const columnAnswers = [
-        {
-            title: 'Answer ID',
-            dataIndex: 'answerId',
-            key: 'answerId',
-        },
-        {
-            title: 'Answer',
-            dataIndex: 'value',
-            key: 'value',
-        },
-        {
-            title: 'Correct',
-            dataIndex: 'isCorrect',
-            key: 'isCorrect',
-            render: (isCorrect) => (
-                <Select defaultValue={isCorrect ? 'Correct' : 'InCorrect'}>
-                    <Select.Option value="Correct">Correct</Select.Option>
-                    <Select.Option value="Incorrect">Incorrect</Select.Option>
-                </Select>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            width: '100px',
-            render: (text, question) => (
-                <>
-                    <Button type='primary' danger className="btn btn-danger" icon={<DeleteOutlined />} />
-                    <Button type="default" danger className='btn text-secondary' icon={<EditOutlined />} />
-                </>
-            ),
-        },
-    ];
-
     return (
         <>
             <AddQuestion />
@@ -168,23 +134,16 @@ const QuestionList = () => {
                     pagination={{ pageSize: 5 }}
                 />
             </div>
-            <Modal title='Answer' visible={isModalShow} onCancel={handleCloseModal} onOk={handleCloseModal} width={1000}>
-                <div>
-                    {listAnswerQuestion.length > 0 ? (
-                        <Table
-                            dataSource={listAnswerQuestion}
-                            columns={columnAnswers}
-                            rowKey="answerId"
-                            pagination={false}
-                        />
-                    ) : (
-                        <p>No questions available.</p>
-                    )}
-                </div>
-            </Modal>
+            <ModalShowAnswer
+                title={`Question: ${currentQuestionId}`}
+                visible={isModalShowAnswer}
+                onCancel={handleCloseModal}
+                onSave={handleCloseModal}
+                listAnswerEachQuestion={listAnswerQuestion}>
+            </ModalShowAnswer>
 
             <UpdateQuestion
-                visible={isModalQuestion}
+                visible={isModalUpdateQuestion}
                 onCancel={handleCancelUpdateQuestion}
                 onSave={handleSaveUpdateQuestion}
                 selectedQuestion={selectedQuestion}
