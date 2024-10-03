@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { Table, Select, Button } from 'antd';
+import { Table, Select, Button, Input } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import AddAnswer from "./AddAnswer";
+import { BASE_URL } from "../ManageExam/Exams";
+import { DeleteAnswer } from "./DeleteAnswer";
+import UpdateAnswer from "./UpdateAnswer";
 
 
 export const fetchAnswer = async () => {
     try {
-        const response = await axios.get(`https://localhost:8080/api/Answer`);
+        const response = await axios.get(`${BASE_URL}/Answer`);
         return response.data
     }
     catch (error) {
@@ -18,6 +21,8 @@ export const fetchAnswer = async () => {
 const AnswerList = () => {
     const dispatch = useDispatch();
     const [listAnswer, setListAnswer] = useState([])
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [isModalAnswer, setIsModalAnswer] = useState(false)
 
     useEffect(() => {
         const loadData = async () => {
@@ -27,17 +32,37 @@ const AnswerList = () => {
         loadData();
     }, [listAnswer])
 
+    const handleUpdateAnswer = (answer) => {
+        setIsModalAnswer(true);
+        setSelectedAnswer(answer);
+    }
+    const handleCancelUpdateAnswer = () => {
+        setIsModalAnswer(false);
+        setSelectedAnswer(null);
+    }
+    const handleSaveUpdateAnswer = () => {
+        setIsModalAnswer(false);
+        setSelectedAnswer(null);
+    }
+
+    const handleDeleteAnswer = (id) => {
+        console.log('id: ', id)
+        DeleteAnswer(id)
+    }
+
     //
     const columns = [
         {
             title: 'ID',
             dataIndex: 'answerId',
             key: 'id',
+            width: '100px',
         },
         {
             title: 'QuestionId',
             dataIndex: 'questionId',
             key: 'questionId',
+            width: '200px',
         },
         {
             title: 'Answer',
@@ -48,28 +73,27 @@ const AnswerList = () => {
             title: 'Correct',
             dataIndex: 'isCorrect',
             key: 'isCorrect',
+            width: '200px',
             render: (isCorrect) => (
-                <Select defaultValue={isCorrect ? 'Correct' : 'InCorrect'}>
-                    <Select.Option value="Correct">Correct</Select.Option>
-                    <Select.Option value="Incorrect">Incorrect</Select.Option>
-                </Select>
+                <Input value={isCorrect ? 'Correct' : 'Incorrect'} disabled className="text-dark"/>
             ),
-        },
+        },                
         {
             title: 'Action',
             key: 'action',
-            render: (text, task) => (
+            width: '200px',
+            render: (text, answer) => (
                 <>
                     <Button
                         type='primary'
                         danger
-                        // onClick={() => handleDeleteTask(task.id)} 
+                        onClick={() => handleDeleteAnswer(answer.answerId)}
                         className="btn btn-danger"
                         icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
                     >
                     </Button>
                     <Button type="default" danger
-                        // onClick={() => handleUpdateUser(user)}
+                        onClick={() => handleUpdateAnswer(answer)}
                         className='btn btn-warning text-secondary'
                         icon={<EditOutlined />}>
                     </Button>
@@ -78,7 +102,7 @@ const AnswerList = () => {
         },
     ];
 
-    return ( 
+    return (
         <div>
             <>
                 <AddAnswer />
@@ -88,6 +112,13 @@ const AnswerList = () => {
                     rowKey="id"
                     pagination={{ pageSize: 5 }}
                 />
+
+                <UpdateAnswer
+                    visible={isModalAnswer}
+                    onCancel={handleCancelUpdateAnswer}
+                    onSave={handleSaveUpdateAnswer}
+                    selectedAnswer={selectedAnswer}>
+                </UpdateAnswer>
             </>
         </div>
     )

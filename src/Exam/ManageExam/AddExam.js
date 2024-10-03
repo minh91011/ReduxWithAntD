@@ -27,7 +27,7 @@ const AddExam = () => {
                 console.log(error)
                 toast.error('Add fail!')
             }
-        } 
+        }
     }
 
     return (

@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../ManageExam/Exams";
 
 const AddQuestion = () => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const AddQuestion = () => {
                 questionText: questionInfo.questionText
             };
             try{
-                const response = await axios.post(`https://localhost:8080/api/Question/Add/`, newQuestion);
+                const response = await axios.post(`${BASE_URL}/Question/Add/`, newQuestion);
                 toast.success('Add success!')
                 setQuestionInfo({questionText: ''})
             }

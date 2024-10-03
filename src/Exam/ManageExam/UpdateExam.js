@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Modal, Form, Input } from 'antd';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BASE_URL } from './Exams';
+import { BASE_URL } from './Exams'; 
 
 const UpdateExam = ({ visible, onCancel, onSave, selectedExam, dispatch }) => {
     const [form] = Form.useForm();
@@ -24,18 +24,16 @@ const UpdateExam = ({ visible, onCancel, onSave, selectedExam, dispatch }) => {
             .then(async (values) => {
                 try {
                     const apiUrl = `${BASE_URL}/Exam/Update/${selectedExam.examId}`;
-                    // Tạo object mới bao gồm các trường từ selectedExam và chỉ cập nhật name và duration
+                    
                     const updatedExam = {
-                        ...selectedExam, // Giữ lại toàn bộ các trường còn lại của object Exam
+                        ...selectedExam, 
                         examName: values.examName,
                         duration: values.duration,
                     };
     
-                    // Gọi API với object đầy đủ
                     const response = await axios.put(apiUrl, updatedExam);
                     toast.success("Update success!");
     
-                    // Gọi onSave để thông báo về component cha
                     onSave(response.data);
     
                 } catch (error) {

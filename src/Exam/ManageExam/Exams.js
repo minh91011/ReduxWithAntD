@@ -2,21 +2,24 @@ import React, { useEffect, useState } from "react";
 import AddExam from "./AddExam";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, Select } from 'antd';
 import { DeleteOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
 import UpdateExam from "./UpdateExam";
 import { DeleteExam } from "./DeleteExam";
- 
-export const BASE_URL = 'https://examonline.azurewebsites.net/api';  
- 
-export const fetchExam = async () => {  
-    try {  
-        const response = await axios.get(`${BASE_URL}/Exam`);  
-        return response.data;  
-    } catch (error) {  
-        console.log('Error:', error);  
-    }  
+import { fetchAnswer } from "../ManageQuestion/Questions";
+import { DeleteExamQuestion, DeleteQuestion } from "../ManageQuestion/DeleteQuestion";
+import { DeleteAnswer } from "../ManageAnswer/DeleteAnswer";
+
+export const BASE_URL = 'https://examonline.azurewebsites.net/api';
+
+export const fetchExam = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/Exam`);
+        return response.data;
+    } catch (error) {
+        console.log('Error:', error);
+    }
 };
 
 export const fetchQuestionByExam = async (id) => {
@@ -31,18 +34,22 @@ export const fetchQuestionByExam = async (id) => {
 const ExamList = () => {
     const dispatch = useDispatch();
     const [listExam, setListExam] = useState([]);
-    const [listExamQuestion, setListExamQuestion] = useState([]);
     const [selectedExam, setSelectedExam] = useState(null);
+    const [listExamQuestion, setlistExamQuestion] = useState([]);
 
     //Modal cho ViewQuestion
+    const [listQuestion, setlistQuestion] = useState([]);
     const [isModalShow, setIsModalShow] = useState(false);
+    const [currentExamId, setCurrentExamId] = useState(null);
+    //Modal cho ViewAnswer
+    const [listAnswers, setListAnswers] = useState([]); 
+    const [isModalAnswer, setIsModalAnswer] = useState(false);  
+    const [currentQuestionId, setCurrentQuestionId] = useState(null);
+
     //Modal cho UpdateExam
     const [isModalExam, setIsModalExam] = useState(false);
 
-    const [currentExamId, setCurrentExamId] = useState(null);
-
-
-    //định nghĩa để show Modal
+    //định nghĩa để show title Modal
     const [examName, setExamName] = useState('');
     const [examId, setExamId] = useState('');
 
@@ -60,15 +67,34 @@ const ExamList = () => {
                 const fetchedQuestions = await fetchQuestionByExam(currentExamId);
                 if (fetchedQuestions) {
                     const questions = fetchedQuestions.map(q => q.question);
-                    setListExamQuestion(questions);
+                    setlistQuestion(questions);
+                    setlistExamQuestion(fetchedQuestions)
                 } else {
-                    setListExamQuestion([]);
+                    setlistQuestion([]);
                     toast.error('No questions found for this exam!');
                 }
             }
         };
         loadQuestions();
-    }, [isModalShow]);
+    }, [isModalShow, listQuestion]);
+
+    //Exam
+    const handleUpdateExam = (exam) => {
+        setSelectedExam(exam);
+        setIsModalExam(true);
+    }
+    const handleCancelUpdateExam = () => {
+        setIsModalExam(false);
+        setSelectedExam(null);
+    };
+    const handleSaveUpdateExam = () => {
+        setIsModalExam(false);
+        setSelectedExam(null);
+    };
+    const handleDeleteExam = (id) => {
+        console.log('id: ', id)
+        DeleteExam(id);
+    }
 
     //question
     const handleShowQuestion = (id, name) => {
@@ -79,26 +105,36 @@ const ExamList = () => {
     };
     const handleCloseModal = () => {
         setIsModalShow(false);
-        setListExamQuestion([]);
+        setlistQuestion([]);
         setCurrentExamId(null);
     };
-
-    //Exam
-    const handleUpdateExam = (exam) => {
-        setSelectedExam(exam);
-        setIsModalExam(true);
+    const handleDeleteQuestion = (examQuestionId) => {
+        DeleteExamQuestion(examQuestionId);
+        // console.log('id: ',examQuestionId);
     }
-    const handleCancelUpdateExam = () => {
-        setIsModalExam(false);   
-        setSelectedExam(null);   
+
+    //answer
+    const handleShowAnswers = async (questionId) => {  
+        setCurrentQuestionId(questionId);  
+        // console.log('Qid: ',questionId)
+        const fetchedAnswers = await fetchAnswer(questionId);  
+        if (fetchedAnswers) {  
+            setListAnswers(fetchedAnswers);  
+        } else {  
+            setListAnswers([]);  
+            toast.error('No answers found for this question!');  
+        }  
+        setIsModalAnswer(true);  
+        setIsModalShow(false);
+    };   
+    const handleCloseAnswersModal = () => {  
+        setIsModalAnswer(false);
+        setIsModalShow(true);  
+        setListAnswers([]);  
+        setCurrentQuestionId(null);  
     };
-    const handleSaveUpdateExam = () => {
-        setIsModalExam(false);   
-        setSelectedExam(null);   
-    };
-    const handleDeleteExam = (id) => {
-        console.log('id: ',id)
-        DeleteExam(id);
+    const handleDeleteAnswer = (id) => {
+        DeleteAnswer(id);
     }
 
     const columns = [
@@ -142,6 +178,7 @@ const ExamList = () => {
             title: 'Question ID',
             dataIndex: 'questionId',
             key: 'questionId',
+            width: '150px',
         },
         {
             title: 'Question Text',
@@ -151,10 +188,64 @@ const ExamList = () => {
         {
             title: 'Action',
             key: 'action',
+            width: '210px',
+            render: (text, question, index) => {
+                const examQuestion = listExamQuestion[index]; // Tìm kiếm examQuestion tương ứng từ listExamQuestion
+                return (
+                    <>
+                        <Button
+                            type='primary'
+                            danger
+                            onClick={() => handleDeleteQuestion(examQuestion.examQuestionId)} // Truyền examQuestionId
+                            className="btn btn-danger"
+                            icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
+                        />
+                        <Button type="default" danger className='btn text-secondary' icon={<EditOutlined />} />
+                        <Button type="default" danger onClick={() => handleShowAnswers(question.questionId)} className='btn text-dark' icon={<UnorderedListOutlined />}>
+                            Answers
+                        </Button>
+                    </>
+                );
+            },
+        },
+    ];
+
+    const columnAnswers = [
+        {
+            title: 'Answer ID',
+            dataIndex: 'answerId',
+            key: 'answerId',
+        },
+        {
+            title: 'Answer',
+            dataIndex: 'value',
+            key: 'value',
+        },
+        {
+            title: 'Correct',
+            dataIndex: 'isCorrect',
+            key: 'isCorrect',
+            render: (isCorrect) => (
+                <Select defaultValue={isCorrect ? 'Correct' : 'InCorrect'}>
+                    <Select.Option value="Correct">Correct</Select.Option>
+                    <Select.Option value="Incorrect">Incorrect</Select.Option>
+                </Select>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
             width: '100px',
-            render: (text, question) => (
+            render: (text, answer) => (
                 <>
-                    <Button type='primary' danger className="btn btn-danger" icon={<DeleteOutlined />} />
+                    <Button
+                        type='primary'
+                        danger
+                        onClick={() => handleDeleteAnswer(answer.answerId)}
+                        className="btn btn-danger"
+                        icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
+                    >
+                    </Button>
                     <Button type="default" danger className='btn text-secondary' icon={<EditOutlined />} />
                 </>
             ),
@@ -170,14 +261,17 @@ const ExamList = () => {
                 rowKey="examId"
                 pagination={{ pageSize: 5 }}
             />
-            <Modal title={`Exam ${examId}: ${examName}`} visible={isModalShow} onCancel={handleCloseModal} onOk={handleCloseModal} width={1000}>
+            <Modal title={`Exam ${examId}: ${examName}`} visible={isModalShow}
+                onCancel={handleCloseModal}
+                onOk={handleCloseModal}
+                width={1000}>
                 <div>
-                    {listExamQuestion.length > 0 ? (
+                    {listQuestion.length > 0 ? (
                         <Table
-                            dataSource={listExamQuestion}
+                            dataSource={listQuestion}
                             columns={columnQuestions}
                             rowKey="questionId"
-                            pagination={false}
+                            pagination={{ pageSize: 6 }}
                         />
                     ) : (
                         <p>No questions available.</p>
@@ -192,6 +286,24 @@ const ExamList = () => {
                 selectedExam={selectedExam}
                 dispatch={dispatch}>
             </UpdateExam>
+ 
+            <Modal title={`Answers for Question ID: ${currentQuestionId}`} visible={isModalAnswer}  
+                onCancel={handleCloseAnswersModal}  
+                onOk={handleCloseAnswersModal}  
+                width={1000}>  
+                <div>  
+                    {listAnswers.length > 0 ? (  
+                        <Table
+                        dataSource={listAnswers}
+                        columns={columnAnswers}
+                        rowKey="answerId"
+                        pagination={false}
+                    /> 
+                    ) : (  
+                        <p>No answers available.</p>  
+                    )}  
+                </div>  
+            </Modal>
         </div>
     );
 };
