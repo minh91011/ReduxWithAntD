@@ -1,6 +1,7 @@
 import React from 'react';  
 import { Modal, Table, Select, Button, Input} from 'antd'; 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'; 
+import { DeleteAnswer } from './DeleteAnswer';
 
 const ModalShowAnswer = ({ title, visible, onCancel, listAnswerEachQuestion }) => {  
     const columnAnswers = [  
@@ -28,12 +29,21 @@ const ModalShowAnswer = ({ title, visible, onCancel, listAnswerEachQuestion }) =
             key: 'action',  
             render: (text, answer) => (  
                 <>  
-                    <Button type='primary' danger icon={<DeleteOutlined />} />  
-                    <Button type="default" danger icon={<EditOutlined />} />  
+                    <Button type='primary' danger onClick={() => handleDeleteAnswer(answer.answerId)} icon={<DeleteOutlined />} />  
+                    <Button type="default" danger onClick={() => handleUpdateAnswer(answer)} icon={<EditOutlined />} />  
                 </>  
             ),  
         },  
-    ];  
+    ]; 
+     
+    const handleUpdateAnswer = (answer) => {
+        // DeleteAnswer(answer);
+        console.log('answer: ',answer)
+    }
+    const handleDeleteAnswer = (id) => {
+        DeleteAnswer(id);
+        console.log('id: ',id)
+    }
 
     return (  
         <Modal title={title} visible={visible} onCancel={onCancel} onOk={onCancel} width={1000}>  

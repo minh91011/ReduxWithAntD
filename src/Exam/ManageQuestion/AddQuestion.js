@@ -8,6 +8,7 @@ import { BASE_URL } from "../ManageExam/Exams";
 const AddQuestion = () => {
     const dispatch = useDispatch();
     const [questionInfo, setQuestionInfo] = useState({
+        // examId: '',
         questionText: ''
     });
 
@@ -20,7 +21,7 @@ const AddQuestion = () => {
                 const response = await axios.post(`${BASE_URL}/Question/Add/`, newQuestion);
                 toast.success('Add success!')
                 setQuestionInfo({questionText: ''})
-            }
+            } 
             catch(error){
                 console.log(error)
                 toast.error('Add fail!')

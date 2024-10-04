@@ -43,11 +43,10 @@ const QuestionList = () => {
     useEffect(() => {
         const loadData = async () => {
             const questions = await fetchQuestion();
-            console.log('question: ', questions)
             setListQuestion(questions)
         }
         loadData();
-    }, [])
+    }, [listQuestion])
 
     useEffect(() => {
         const loadAnswer = async () => {
@@ -72,6 +71,7 @@ const QuestionList = () => {
     const handleDeleteQuestion = (id) => {
         DeleteQuestion(id);
     }
+
     const handleUpdateQuestion = (question) => {
         setisModalUpdateQuestion(true);
         setSelectedQuestion(question)
@@ -143,11 +143,11 @@ const QuestionList = () => {
             </ModalShowAnswer>
 
             <UpdateQuestion
+                title={`Update question: ${currentQuestionId}`}
                 visible={isModalUpdateQuestion}
                 onCancel={handleCancelUpdateQuestion}
                 onSave={handleSaveUpdateQuestion}
-                selectedQuestion={selectedQuestion}
-                dispatch={dispatch}>
+                selectedQuestion={selectedQuestion}>
             </UpdateQuestion>
         </>
     )

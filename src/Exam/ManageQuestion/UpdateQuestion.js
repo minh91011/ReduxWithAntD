@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../ManageExam/Exams'; 
 
-const UpdateQuestion = ({ visible, onCancel, onSave, selectedQuestion, dispatch }) => {
+const UpdateQuestion = ({ title, visible, onCancel, onSave, selectedQuestion, dispatch }) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -25,10 +25,12 @@ const UpdateQuestion = ({ visible, onCancel, onSave, selectedQuestion, dispatch 
                     const apiUrl = `${BASE_URL}/Question/Update/${selectedQuestion.questionId}`;
                     
                     const updatedQuestion = {
-                        ...selectedQuestion, 
+                        // ...selectedQuestion,
+                        questionId: selectedQuestion.questionId, 
                         questionText: values.questionText,
                     };
-    
+                    
+                    console.log('question: ',updatedQuestion);
                     const response = await axios.put(apiUrl, updatedQuestion);
                     toast.success("Update success!");
     
@@ -48,7 +50,7 @@ const UpdateQuestion = ({ visible, onCancel, onSave, selectedQuestion, dispatch 
     return (
         <Modal
             visible={visible}
-            title="Update Question"
+            title={title}
             onCancel={onCancel}
             onOk={handleSave}
             width={700}

@@ -3,14 +3,14 @@ import AddExam from "./AddExam";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Button, Modal, Select } from 'antd';
-import { DeleteOutlined, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, UnorderedListOutlined, PlusCircleOutlined} from '@ant-design/icons';
 import { toast } from "react-toastify";
 import UpdateExam from "./UpdateExam";
 import { DeleteExam } from "./DeleteExam";
 import { fetchAnswer } from "../ManageQuestion/Questions";
 import { DeleteExamQuestion, DeleteQuestion } from "../ManageQuestion/DeleteQuestion";
-import { DeleteAnswer } from "../ManageAnswer/DeleteAnswer";
 import ModalShowAnswer from "../ManageAnswer/ModalShowAnswer";
+import UpdateQuestion from "../ManageQuestion/UpdateQuestion";
 
 export const BASE_URL = 'https://examonline.azurewebsites.net/api';
 
@@ -32,16 +32,19 @@ export const fetchQuestionByExam = async (id) => {
     }
 };
 
-const ExamList = () => {
+const ExamList = () => { 
     const dispatch = useDispatch();
     const [listExam, setListExam] = useState([]);
     const [selectedExam, setSelectedExam] = useState(null);
     const [listExamQuestion, setlistExamQuestion] = useState([]);
 
     //Modal cho ViewQuestion
-    const [listQuestion, setlistQuestion] = useState([]);
+    const [listQuestionEachExam, setlistQuestionEachExam] = useState([]);
     const [isModalShow, setIsModalShow] = useState(false);
     const [currentExamId, setCurrentExamId] = useState(null);
+    const [isModalUpdateQuestion, setisModalUpdateQuestion] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
+
     //Modal cho ViewAnswer
     const [listAnswers, setListAnswers] = useState([]);
     const [isModalAnswer, setIsModalAnswer] = useState(false);
@@ -68,16 +71,31 @@ const ExamList = () => {
                 const fetchedQuestions = await fetchQuestionByExam(currentExamId);
                 if (fetchedQuestions) {
                     const questions = fetchedQuestions.map(q => q.question);
-                    setlistQuestion(questions);
+                    setlistQuestionEachExam(questions);
                     setlistExamQuestion(fetchedQuestions)
                 } else {
-                    setlistQuestion([]);
+                    setlistQuestionEachExam([]);
                     toast.error('No questions found for this exam!');
                 }
             }
         };
         loadQuestions();
-    }, [isModalShow, listQuestion]);
+    }, [isModalShow]);
+
+    useEffect(() => {
+        const loadAnswers = async () => {
+            if (currentQuestionId !== null) {
+                const fetchedAnswers = await fetchAnswer(currentQuestionId);
+                if (fetchedAnswers) {
+                    setListAnswers(fetchedAnswers);
+                } else {
+                    setListAnswers([]);
+                }
+            }
+        };
+
+        loadAnswers();
+    }, [isModalAnswer, listAnswers]); // Chạy lại khi currentQuestionId thay đổi
 
     //Exam
     const handleUpdateExam = (exam) => {
@@ -106,25 +124,33 @@ const ExamList = () => {
     };
     const handleCloseModal = () => {
         setIsModalShow(false);
-        setlistQuestion([]);
+        setlistQuestionEachExam([]);
         setCurrentExamId(null);
     };
     const handleDeleteQuestion = (examQuestionId) => {
         DeleteExamQuestion(examQuestionId);
-        // console.log('id: ',examQuestionId);
     }
+    //UpdateQuestion
+    const handleUpdateQuestion = (question, id) => {
+        setCurrentQuestionId(id);
+        setisModalUpdateQuestion(true);
+        setSelectedQuestion(question)
+        setIsModalShow(false);
+    }
+    const handleCancelUpdateQuestion = () => {
+        setisModalUpdateQuestion(false);
+        setSelectedQuestion(null);
+        setIsModalShow(true);
+    };
+    const handleSaveUpdateQuestion = () => {
+        setisModalUpdateQuestion(false);
+        setSelectedQuestion(null);
+        setIsModalShow(true);
+    };
 
     //answer
-    const handleShowAnswers = async (questionId) => {
+    const handleShowAnswers = (questionId) => {
         setCurrentQuestionId(questionId);
-        // console.log('Qid: ',questionId)
-        const fetchedAnswers = await fetchAnswer(questionId);
-        if (fetchedAnswers) {
-            setListAnswers(fetchedAnswers);
-        } else {
-            setListAnswers([]);
-            toast.error('No answers found for this question!');
-        }
         setIsModalAnswer(true);
         setIsModalShow(false);
     };
@@ -134,9 +160,6 @@ const ExamList = () => {
         setListAnswers([]);
         setCurrentQuestionId(null);
     };
-    const handleDeleteAnswer = (id) => {
-        DeleteAnswer(id);
-    }
 
     const columns = [
         {
@@ -191,7 +214,7 @@ const ExamList = () => {
             key: 'action',
             width: '210px',
             render: (text, question, index) => {
-                const examQuestion = listExamQuestion[index]; // Tìm kiếm examQuestion tương ứng từ listExamQuestion
+                const examQuestion = listExamQuestion[index];
                 return (
                     <>
                         <Button
@@ -201,7 +224,7 @@ const ExamList = () => {
                             className="btn btn-danger"
                             icon={<DeleteOutlined />} // Thêm biểu tượng thùng rác
                         />
-                        <Button type="default" danger className='btn text-secondary' icon={<EditOutlined />} />
+                        <Button type="default" danger onClick={() => handleUpdateQuestion(question, question.questionId)} className='btn text-secondary' icon={<EditOutlined />} />
                         <Button type="default" danger onClick={() => handleShowAnswers(question.questionId)} className='btn text-dark' icon={<UnorderedListOutlined />}>
                             Answers
                         </Button>
@@ -225,9 +248,9 @@ const ExamList = () => {
                 onOk={handleCloseModal}
                 width={1000}>
                 <div>
-                    {listQuestion.length > 0 ? (
+                    {listQuestionEachExam.length > 0 ? (
                         <Table
-                            dataSource={listQuestion}
+                            dataSource={listQuestionEachExam}
                             columns={columnQuestions}
                             rowKey="questionId"
                             pagination={{ pageSize: 6 }}
@@ -235,6 +258,16 @@ const ExamList = () => {
                     ) : (
                         <p>No questions available.</p>
                     )}
+                    <Select
+                        className="w-50 mr-3">
+                        <Select.Option value="">Select question</Select.Option>
+                        {listQuestionEachExam.map(question => (
+                            <Select.Option key={question.questionId} value={question.questionId}>
+                                {question.questionText}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                    <Button type="success" danger className='btn btn-primary' icon={<PlusCircleOutlined />} />
                 </div>
             </Modal>
 
@@ -245,6 +278,15 @@ const ExamList = () => {
                 selectedExam={selectedExam}
                 dispatch={dispatch}>
             </UpdateExam>
+
+            <UpdateQuestion
+                title={`Update question: ${currentQuestionId}`}
+                visible={isModalUpdateQuestion}
+                onCancel={handleCancelUpdateQuestion}
+                onSave={handleSaveUpdateQuestion}
+                selectedQuestion={selectedQuestion}>
+            </UpdateQuestion>
+
 
             <ModalShowAnswer
                 title={`Question: ${currentQuestionId}`}
