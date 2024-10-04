@@ -3,7 +3,7 @@ import AddExam from "./AddExam";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Table, Button, Modal, Select } from 'antd';
-import { DeleteOutlined, EditOutlined, UnorderedListOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, UnorderedListOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
 import UpdateExam from "./UpdateExam";
 import { DeleteExam } from "./DeleteExam";
@@ -32,7 +32,7 @@ export const fetchQuestionByExam = async (id) => {
     }
 };
 
-const ExamList = () => { 
+const ExamList = () => {
     const dispatch = useDispatch();
     const [listExam, setListExam] = useState([]);
     const [selectedExam, setSelectedExam] = useState(null);
@@ -42,13 +42,13 @@ const ExamList = () => {
     const [listQuestionEachExam, setlistQuestionEachExam] = useState([]);
     const [isModalShow, setIsModalShow] = useState(false);
     const [currentExamId, setCurrentExamId] = useState(null);
+    const [currentQuestionId, setCurrentQuestionId] = useState(null);
     const [isModalUpdateQuestion, setisModalUpdateQuestion] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
 
     //Modal cho ViewAnswer
     const [listAnswers, setListAnswers] = useState([]);
     const [isModalAnswer, setIsModalAnswer] = useState(false);
-    const [currentQuestionId, setCurrentQuestionId] = useState(null);
 
     //Modal cho UpdateExam
     const [isModalExam, setIsModalExam] = useState(false);
@@ -287,9 +287,8 @@ const ExamList = () => {
                 selectedQuestion={selectedQuestion}>
             </UpdateQuestion>
 
-
             <ModalShowAnswer
-                title={`Question: ${currentQuestionId}`}
+                title={`Answer of question: ${currentQuestionId}`}
                 visible={isModalAnswer}
                 onCancel={handleCloseAnswersModal}
                 onSave={handleCloseAnswersModal}
