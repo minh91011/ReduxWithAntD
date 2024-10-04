@@ -4,29 +4,29 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../ManageExam/Exams'; 
 
-const UpdateQuestion = ({ title, visible, onCancel, onSave, selectedQuestion, dispatch }) => {
+const UpdateQuestion = ({ title, visible, onCancel, onSave, selectedUpdateQuestion, dispatch }) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (selectedQuestion) {
+        if (selectedUpdateQuestion) {
             form.setFieldsValue({
-                questionText: selectedQuestion.questionText,
+                questionText: selectedUpdateQuestion.questionText,
             });
         } else {
             form.resetFields();
         }
-    }, [selectedQuestion, form]);
+    }, [selectedUpdateQuestion, form]);
 
     const handleSave = () => {
         form
             .validateFields()
             .then(async (values) => {
                 try {
-                    const apiUrl = `${BASE_URL}/Question/Update/${selectedQuestion.questionId}`;
+                    const apiUrl = `${BASE_URL}/Question/Update/${selectedUpdateQuestion.questionId}`;
                     
                     const updatedQuestion = {
                         // ...selectedQuestion,
-                        questionId: selectedQuestion.questionId, 
+                        questionId: selectedUpdateQuestion.questionId, 
                         questionText: values.questionText,
                     };
                     

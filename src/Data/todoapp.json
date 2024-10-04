@@ -4,10 +4,10 @@
       "id": "1",
       "title": "Buy groceries",
       "description": "Purchase items for the week including milk, eggs, and bread.",
-      "completed": true,
+      "completed": false,
       "assignee": "Nguyễn Nhật Minh",
       "createTime": "2024-09-01",
-      "completeTime": "9/25/2024, 6:03:36 PM"
+      "completeTime": null
     },
     {
       "id": "2",

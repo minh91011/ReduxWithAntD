@@ -7,25 +7,17 @@ import { DeleteOutlined, EditOutlined, UnorderedListOutlined, PlusCircleOutlined
 import { toast } from "react-toastify";
 import UpdateExam from "./UpdateExam";
 import { DeleteExam } from "./DeleteExam";
-import { fetchAnswer } from "../ManageQuestion/Questions";
+import { fetchAnswer, fetchQuestion } from "../ManageQuestion/Questions";
 import { DeleteExamQuestion, DeleteQuestion } from "../ManageQuestion/DeleteQuestion";
 import ModalShowAnswer from "../ManageAnswer/ModalShowAnswer";
 import UpdateQuestion from "../ManageQuestion/UpdateQuestion";
+import { addQuestionExam, fetchQuestionByExam } from "./ExamQuestion";
 
 export const BASE_URL = 'https://examonline.azurewebsites.net/api';
 
 export const fetchExam = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/Exam`);
-        return response.data;
-    } catch (error) {
-        console.log('Error:', error);
-    }
-};
-
-export const fetchQuestionByExam = async (id) => {
-    try {
-        const response = await axios.get(`${BASE_URL}/ExamQuestion/examId/${id}`);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
@@ -44,7 +36,12 @@ const ExamList = () => {
     const [currentExamId, setCurrentExamId] = useState(null);
     const [currentQuestionId, setCurrentQuestionId] = useState(null);
     const [isModalUpdateQuestion, setisModalUpdateQuestion] = useState(false);
-    const [selectedQuestion, setSelectedQuestion] = useState(null);
+    const [selectedUpdateQuestion, setselectedUpdateQuestion] = useState(null);
+    const [allQuestions, setAllQuestions] = useState([]);
+    const [selectedAddQuestion, setselectedAddQuestion] = useState({
+        examId: '',
+        questionId: ''
+    });
 
     //Modal cho ViewAnswer
     const [listAnswers, setListAnswers] = useState([]);
@@ -79,8 +76,13 @@ const ExamList = () => {
                 }
             }
         };
+        const loadAllQuestion = async () => {
+            const questions = await fetchQuestion();
+            setAllQuestions(questions);
+        }
         loadQuestions();
-    }, [isModalShow]);
+        loadAllQuestion();
+    }, [isModalShow, listQuestionEachExam]);
 
     useEffect(() => {
         const loadAnswers = async () => {
@@ -111,7 +113,6 @@ const ExamList = () => {
         setSelectedExam(null);
     };
     const handleDeleteExam = (id) => {
-        console.log('id: ', id)
         DeleteExam(id);
     }
 
@@ -119,7 +120,8 @@ const ExamList = () => {
     const handleShowQuestion = (id, name) => {
         setCurrentExamId(id);
         setExamId(id);
-        setExamName(name)
+        setExamName(name);
+        setselectedAddQuestion({ examId: id, questionId: '' });
         setIsModalShow(true);
     };
     const handleCloseModal = () => {
@@ -134,18 +136,27 @@ const ExamList = () => {
     const handleUpdateQuestion = (question, id) => {
         setCurrentQuestionId(id);
         setisModalUpdateQuestion(true);
-        setSelectedQuestion(question)
+        setselectedUpdateQuestion(question)
         setIsModalShow(false);
     }
     const handleCancelUpdateQuestion = () => {
         setisModalUpdateQuestion(false);
-        setSelectedQuestion(null);
+        setselectedUpdateQuestion(null);
         setIsModalShow(true);
     };
     const handleSaveUpdateQuestion = () => {
         setisModalUpdateQuestion(false);
-        setSelectedQuestion(null);
+        setselectedUpdateQuestion(null);
         setIsModalShow(true);
+    };
+    //addExamQuestion
+    const handleAddQuestionExam = async () => {
+        const newExamQuestion = {
+            examId: selectedAddQuestion.examId,
+            questionId: selectedAddQuestion.questionId
+        };
+        console.log('newExam: ', newExamQuestion); 
+        await addQuestionExam(newExamQuestion);
     };
 
     //answer
@@ -258,16 +269,21 @@ const ExamList = () => {
                     ) : (
                         <p>No questions available.</p>
                     )}
-                    <Select
-                        className="w-50 mr-3">
-                        <Select.Option value="">Select question</Select.Option>
-                        {listQuestionEachExam.map(question => (
-                            <Select.Option key={question.questionId} value={question.questionId}>
-                                {question.questionText}
+                    <div className="d-flex justify-content-start">
+                        <Select className="w-75" defaultValue=""
+                            onChange={(value) => setselectedAddQuestion({ ...selectedAddQuestion, questionId: value })}
+                            value={selectedAddQuestion.questionId}>
+                            <Select.Option value="" disabled>
+                                Add question
                             </Select.Option>
-                        ))}
-                    </Select>
-                    <Button type="success" danger className='btn btn-primary' icon={<PlusCircleOutlined />} />
+                            {allQuestions.map(question => (
+                                <Select.Option key={question.questionId} value={question.questionId}>
+                                    {question.questionText}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                        <Button type="success" danger className='btn btn-primary' onClick={() => handleAddQuestionExam(examId)} icon={<PlusCircleOutlined />} />
+                    </div>
                 </div>
             </Modal>
 
@@ -284,7 +300,7 @@ const ExamList = () => {
                 visible={isModalUpdateQuestion}
                 onCancel={handleCancelUpdateQuestion}
                 onSave={handleSaveUpdateQuestion}
-                selectedQuestion={selectedQuestion}>
+                selectedUpdateQuestion={selectedUpdateQuestion}>
             </UpdateQuestion>
 
             <ModalShowAnswer
